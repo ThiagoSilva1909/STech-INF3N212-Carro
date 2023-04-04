@@ -9,6 +9,7 @@ package model;
  * @author jbferraz
  */
 public class Pessoa {
+
     private int idPessoa;
     private String nome;
     private String cpf;
@@ -20,11 +21,12 @@ public class Pessoa {
 
     /**
      * Construtor da Classe Pessoa inicializando todos os atributos
+     *
      * @param idPessoa
      * @param nome
      * @param cpf
      * @param endereco
-     * @param telefone 
+     * @param telefone
      */
     public Pessoa(int idPessoa, String nome, String cpf, String endereco, String telefone) {
         this.idPessoa = idPessoa;
@@ -36,7 +38,8 @@ public class Pessoa {
 
     /**
      * Método getIdPessoa pega o valor do atributo
-     * @return 
+     *
+     * @return
      */
     public int getIdPessoa() {
         return idPessoa;
@@ -44,7 +47,8 @@ public class Pessoa {
 
     /**
      * Método setIdPessoa seta valor no atributo id da Pessoa
-     * @param idPessoa 
+     *
+     * @param idPessoa
      */
     public void setIdPessoa(int idPessoa) {
         this.idPessoa = idPessoa;
@@ -84,9 +88,8 @@ public class Pessoa {
 
     @Override
     public String toString() {
-        return "\n---" + "\nidPessoa:\t" + idPessoa + "\nnome:\t" + nome 
-                + "\ncpf:\t" + cpf + "\nendereco:\t" + endereco + "\ntelefone:\t" + telefone ;
+        return "\n---" + "\nidPessoa:\t" + idPessoa + "\nnome:\t" + nome
+                + "\ncpf:\t" + cpf + "\nendereco:\t" + endereco + "\ntelefone:\t" + telefone;
     }
-    
-    
+
 }//fim classe
