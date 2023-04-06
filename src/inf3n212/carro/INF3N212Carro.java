@@ -127,37 +127,36 @@ public class INF3N212Carro {
     }// fim subMenu
 
     private static void cadastrarPessoa() {
-        System.out.println("--Cadastro de Pessoa--");
+        System.out.println("-- Cadastro de Pessoa --");
         int idPessoa;
         String nome;
         String cpf;
         String endereco;
         String telefone;
         boolean tcpf = true;
+
         do {
-            System.out.println("Informe o CPF");
+            System.out.print("Informe o CPF: ");
             cpf = leia.nextLine();
             tcpf = Validadores.isCPF(cpf);
             if (tcpf) {
                 if (cadPessoa.getPessoaCPF(cpf) != null) {
-                    System.out.println("CPF já cadastrado");
+                    System.out.println("CPF já cadastrado!");
                     System.out.println("1 - Tentar novamente");
                     System.out.println("2 - Cancelar cadastro");
-                    System.out.println("Digite aqui: ");
+                    System.out.print("Digite aqui: ");
                     int op = leiaNumInt();
                     if (op == 2) {
                         return;
                     }
                 } else {
                     tcpf = false;
-
                 }
-
             } else {
                 System.out.println("CPF inválido!");
                 System.out.println("1 - Tentar novamente");
                 System.out.println("2 - Cancelar cadastro");
-                System.out.println("Digite aqui: ");
+                System.out.print("Digite aqui: ");
                 int op = leiaNumInt();
                 if (op == 2) {
                     return;
@@ -165,15 +164,79 @@ public class INF3N212Carro {
                 tcpf = true;
             }
         } while (tcpf);
-        System.out.println("Passou CPF!");
+        System.out.print("Informe o nome: ");
+        nome = leia.nextLine();
+        System.out.print("Informe o endereço: ");
+        endereco = leia.nextLine();
+        System.out.print("Informe o telefone: ");
+        telefone = leia.nextLine();
+        idPessoa = cadPessoa.geraID();
+        Pessoa p = new Pessoa(idPessoa, nome, cpf, endereco, telefone);
+        cadPessoa.addPessoa(p);
+        System.out.println(p.getNome() + " cadastrado com sucesso!");
     }
 
     private static void cadastrarCarro() {
-        System.out.println("Carro");
+        System.out.println("--Cadastrar Carro--");
+        
+        
     }
 
     private static void editarPessoa() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        System.out.println("-- Editar Pessoa --");
+        boolean isCPF;
+        do {
+            System.out.print("Informe o CPF da Pessoa a ser editado: ");
+            String cpf = leia.nextLine();
+            isCPF = Validadores.isCPF(cpf);
+            if (isCPF) {
+                Pessoa p = cadPessoa.getPessoaCPF(cpf);
+                if (p != null) {
+                    do{
+                    System.out.println("Quais dados de " + p.getNome() + " deseja alterar?");
+                    System.out.println("1 - Nome");
+                    System.out.println("2 - Endereço");
+                    System.out.println("3 - Telefone");
+                    System.out.println("4 - Todos");
+                    System.out.println("0 - Voltar");
+                    System.out.print("Digite aqui: ");
+                    int op = leiaNumInt();
+                    if (op == 1 || op == 4) {
+                        System.out.print("Informe o novo nome: ");
+                        p.setNome(leia.nextLine());
+                    }
+                    if (op == 2 || op == 4) {
+                        System.out.print("Informe o novo endereço: ");
+                        p.setEndereco(leia.nextLine());
+                    }
+                    if (op == 3 || op == 4) {
+                        System.out.print("Informe o novo telefone: ");
+                        p.setTelefone(leia.nextLine());
+                    }
+                    if (op == 0) {
+                        System.out.println("Operação cancelada pelo usuário!");
+                       isCPF = false;
+                    }
+                     if(op < 0 || op > 4) {
+                         System.out.println("Opção inválida, tente novamente!");
+                     }
+                     
+                    }while(isCPF);
+                } else {
+                    System.out.println("CPF não cadastrado!");
+                    isCPF = false;
+                }
+            } else {
+                System.out.println("CPF inválido!");
+                System.out.print("Deseja tentar novamente? \n 1 - Sim | 2 - Não: ");
+                int op = leiaNumInt();
+                if (op == 1) {
+                    isCPF = true;
+                } else {
+                    isCPF = false;
+                }
+            }
+        } while (isCPF);
     }
 
     private static void editarCarro() {
@@ -181,7 +244,7 @@ public class INF3N212Carro {
     }
 
     private static void listarPessoa() {
-        System.out.println("--Lista de Pessoas --");
+        System.out.println("-- Lista de Pessoas --");
         for (Pessoa pessoa : cadPessoa.getPessoas()) {
             System.out.println(pessoa.toString());
         }
@@ -195,12 +258,47 @@ public class INF3N212Carro {
     }
 
     private static void deletarPessoa() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        System.out.println("-- Deletar Pessoa --");
+        boolean delCPF = false;
+        do {
+            System.out.print("Informe o CPF da Pessoa a ser deletada: ");
+            String cpf = leia.nextLine();
+            delCPF = Validadores.isCPF(cpf);
+            if (delCPF) {
+                Pessoa p = cadPessoa.getPessoaCPF(cpf);
+                if (p != null) {
+                    System.out.println("Deseja realmente deletar " + p.getNome() + "?");
+                    System.out.print("1 - Sim | 2 - Não: ");
+                    int op = leiaNumInt();
+                    if (op == 1) {
+                        cadPessoa.removePessoa(p);
+                        System.out.println("Pessoa deletada com sucesso!");
+                        delCPF = false;
+                    } else {
+                        System.out.println("Operação cancelada pelo usuário!");
+                        delCPF = false;
+                    }
+                } else {
+                    System.out.println("CPF não cadastrado!");
+                    System.out.println("Deseja tentar novamente?");
+                    System.out.print("1 - Sim | 2 - Não: ");
+                    int op = leiaNumInt();
+                    if (op == 1) {
+                        delCPF = true;
+                    } else {
+                        delCPF = false;
+                    }
+                }
+            } else {
+                System.out.println("CPF inválido!"
+                        + "\nTente novamente.");
+                delCPF = true;
+            }
+        } while (delCPF);
+    }//fim do deletarPessoa
 
     private static void deletarCarro() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-
     }
 
 }//fim classe
